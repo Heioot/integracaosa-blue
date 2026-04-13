@@ -1,0 +1,7 @@
+{
+  "liveServer.settings.port": 5500,
+  "liveServer.settings.root": "/",
+  "liveServer.settings.ignoreFiles": [".vscode/**", ".git/**", "**/node_modules/**", "**/*.pdf"],
+  "liveServer.settings.donotShowInfoMsg": true,
+  "liveServer.settings.donotVerifyTags": true
+}

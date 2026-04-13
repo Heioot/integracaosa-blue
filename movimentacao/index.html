@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Touya | Movimentação de estoque</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Manrope:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body class="page-movimentacao">
+    <header class="topbar">
+      <div class="brand">Touya</div>
+      <nav class="top-nav">
+        <a href="../index.html">Dashboard</a>
+        <div class="nav-dropdown" id="nav-dropdown-calculadora">
+          <span class="nav-dropdown-label">Calculadora</span>
+          <ul class="nav-dropdown-menu" role="menu">
+            <li role="none"><a href="../index.html" role="menuitem">TikTok</a></li>
+            <li role="none"><a href="#" role="menuitem">Shopee</a></li>
+          </ul>
+        </div>
+        <a href="../index.html">History</a>
+        <a href="./" class="active">Movimentação</a>
+        <a href="../apresentacao.html">Painel</a>
+      </nav>
+      <div class="top-actions">
+        <span class="dot"></span>
+      </div>
+    </header>
+
+    <div class="app-shell">
+      <aside class="sidebar">
+        <nav class="side-nav">
+          <a href="../index.html"><span>Home</span></a>
+          <a href="../index.html"><span>Calculadora TikTok</span></a>
+          <a href="#"><span>Analytics</span></a>
+          <a href="#"><span>Inventory</span></a>
+          <a href="./" class="active"><span>Movimentação</span></a>
+          <a href="../apresentacao.html"><span>Painel ao vivo</span></a>
+        </nav>
+      </aside>
+      <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+      <div class="sidebar-controls">
+        <button id="toggle-sidebar" class="icon-btn" type="button" title="Recuar menu">◀</button>
+      </div>
+
+      <main class="container">
+        <section class="hero">
+          <h1>Movimentação <span>BlueFocus</span></h1>
+          <p>
+            A <strong>Leitura do dia</strong> mostra só produtos que também estão na calculadora TikTok (com
+            ID BlueFocus). Use a conexão e a lista monitorada nas seções abaixo para atualizar.
+          </p>
+        </section>
+
+        <section class="card" id="bf-card-leitura-dia">
+          <div class="header-row">
+            <h2>Leitura do dia</h2>
+            <div class="header-actions">
+              <button type="button" id="bf-atualizar" class="btn-muted">Atualizar leitura</button>
+              <button type="button" id="bf-baseline" class="btn-muted">Definir estoque inicial do dia</button>
+            </div>
+          </div>
+          <p class="hint">
+            Lista apenas produtos da <strong>calculadora TikTok</strong> com
+            <strong>ID BlueFocus</strong> ou <strong>SKU só numérico</strong> (mesmo ProdutoId do PDV), e linha
+            correspondente na lista monitorada. Com a página aberta, a leitura roda também
+            <strong>automaticamente todo dia às 16h</strong> (horário do seu computador); os botões continuam disponíveis.
+          </p>
+          <p class="hint" id="bf-baseline-msg"></p>
+          <p id="bf-leitura-ok" class="config-feedback" role="status" aria-live="polite"></p>
+          <p id="bf-erro" class="erro-api" role="alert"></p>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Nome do produto</th>
+                  <th>Estoque no PDV</th>
+                  <th>Estoque inicial (dia)</th>
+                  <th>Quantidade alterada</th>
+                </tr>
+              </thead>
+              <tbody id="bf-ranking-body"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="card movimentacao-config">
+          <h2>Conexão (SOAP)</h2>
+          <p class="hint">
+            O PDF da BlueFocus envia o token no header <code>autentica</code>. Use os <strong>mesmos códigos
+            do login do PDV</strong> — em geral o <strong>EmpresaId</strong> é um <strong>código curto</strong>
+            (ex.: <code>SANHERO</code>), <em>não</em> a razão social completa com espaços. Se a API recusar,
+            confira no BlueFocus o código exato da empresa e do PDV.
+            <strong>Salvar</strong> grava no JSON central (<code>data/touya-db.json</code>) via
+            <code>servidor.py</code>. Você pode manter um modelo sempre pronto em
+            <code>db/bluefocus-soap-config.json</code> (mesmos campos): se a config no banco estiver vazia, o
+            servidor e a página completam a partir desse arquivo. O terminal do servidor só registra chamadas
+            reais — use <strong>Testar conexão</strong>, <strong>Atualizar leitura</strong> ou
+            <strong>Importar cadastro</strong>. Abra em <code>http://localhost:8080</code> (não arquivo direto).
+          </p>
+          <div class="form-grid">
+            <label>
+              EmpresaId
+              <input id="bf-empresa" type="text" autocomplete="off" placeholder="Ex.: EMPRESATESTE" />
+            </label>
+            <label>
+              UsuarioId
+              <input id="bf-usuario" type="text" autocomplete="off" placeholder="Ex.: CAIXA" />
+            </label>
+            <label>
+              PDVCodigo
+              <input id="bf-pdv" type="number" min="0" step="1" placeholder="Ex.: 2" />
+            </label>
+            <label>
+              Token (autentica)
+              <input id="bf-token" type="password" autocomplete="off" placeholder="XXXX-XXXX-..." />
+            </label>
+          </div>
+          <div class="header-row" style="margin-top: 14px; flex-wrap: wrap; gap: 8px">
+            <button type="button" id="bf-salvar-config" class="btn-muted">Salvar configuração</button>
+            <button type="button" id="bf-testar-conexao" class="btn-muted">Testar conexão (SOAP)</button>
+            <button type="button" id="bf-exportar-soap-json" class="btn-muted">Exportar JSON da conexão</button>
+            <button type="button" id="bf-importar-soap-json" class="btn-muted">Importar JSON da conexão</button>
+            <input type="file" id="bf-importar-soap-file" accept="application/json,.json" hidden />
+          </div>
+          <p id="bf-config-salva-msg" class="config-feedback" role="status" aria-live="polite"></p>
+        </section>
+
+        <section class="card">
+          <h2>Importar cadastro (SOAP — ExportaCad SAT)</h2>
+          <p class="hint">
+            Operação <code>IntegracaoFcxExportaCadSAT.Execute</code>: corpo com
+            <code>Sdtwebserviceentradaexpcadastro</code> (EmpresaId, UsuarioId, PDVCodigo, TipoAtualizacao,
+            Tipo=4, ProdutoId para paginação, demais zerados). O proxy envia o header
+            <code>SOAPAction: "Valimaction/AINTEGRACAOFCXEXPORTACADSAT.Execute"</code> e
+            <code>autentica</code>, como no WSDL.
+          </p>
+          <div class="form-grid">
+            <label>
+              TipoAtualizacao
+              <select id="bf-tipo-cadastro">
+                <option value="C">C — carga completa (ignora última importação)</option>
+                <option value="A">A — só alterações desde a última importação</option>
+              </select>
+            </label>
+          </div>
+          <div class="header-row" style="margin-top: 14px">
+            <button type="button" id="bf-importar-cadastro" class="btn-muted">
+              Buscar produtos no BlueFocus e preencher a lista
+            </button>
+          </div>
+          <p class="hint" id="bf-cadastro-status" aria-live="polite"></p>
+        </section>
+
+        <section class="card" id="bf-card-produtos-monitorados">
+          <div class="header-row" style="margin-bottom: 4px; flex-wrap: wrap; gap: 8px">
+            <h2 style="margin: 0">Produtos monitorados</h2>
+            <button type="button" id="bf-toggle-monitor" class="btn-muted" aria-expanded="true" title="Ocultar ou mostrar a tabela">
+              Recolher lista
+            </button>
+          </div>
+          <div id="bf-produtos-collapsible" class="bf-produtos-collapsible">
+          <p class="hint">
+            <strong>Obrigatório para «Atualizar leitura»:</strong> ao menos uma linha com
+            <strong>ProdutoId</strong> e <strong>Código de barras</strong> (como no PDF). Só a conexão
+            SOAP acima não basta — a consulta de quantidade precisa saber quais produtos buscar.
+          </p>
+          <p class="hint">
+            Inclua os itens que deseja consultar. Você pode
+            <button type="button" id="bf-importar-calculadora" class="link-btn">importar da calculadora</button>
+            (produtos com ID BlueFocus preenchido) ou adicionar manualmente.
+          </p>
+          <div class="table-wrapper">
+            <table class="movimentacao-editor">
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>ProdutoId</th>
+                  <th>Código barras</th>
+                  <th>Quantidade (PDV)</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="bf-produtos-body"></tbody>
+            </table>
+          </div>
+          <div class="header-actions" style="margin-top: 12px">
+            <button type="button" id="bf-add-linha" class="btn-muted">Adicionar linha</button>
+          </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="../db-api.js"></script>
+    <script src="./movimentacao.js"></script>
+  </body>
+</html>

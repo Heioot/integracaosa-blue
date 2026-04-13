@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Touya | Painel ao vivo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Manrope:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body class="page-apresentacao">
+    <div class="app-shell app-shell--painel-solo">
+      <main class="container dash-container">
+        <div class="dash-toolbar">
+          <nav class="dash-exit-nav" aria-label="Atalhos do site">
+            <a href="./index.html">Calculadora TikTok</a>
+            <span class="dash-exit-sep" aria-hidden="true">·</span>
+            <a href="./movimentacao/">Movimentação</a>
+          </nav>
+          <p class="dash-toolbar-hint">
+            <strong>F11</strong> tela cheia · atualização automática com o banco
+          </p>
+        </div>
+
+        <section class="dash-hero">
+          <div class="dash-hero-inner">
+            <h1>Painel <span>ao vivo</span></h1>
+            <p class="dash-tagline">Resumo da calculadora TikTok e da movimentação BlueFocus</p>
+          </div>
+          <div class="dash-clock" id="dash-clock" aria-live="polite"></div>
+        </section>
+
+        <div class="dash-kpi-grid">
+          <article class="dash-kpi card">
+            <span class="dash-kpi-label">Produtos na base</span>
+            <span class="dash-kpi-value" id="dash-kpi-produtos">0</span>
+          </article>
+          <article class="dash-kpi card">
+            <span class="dash-kpi-label">Lucro total (estim.)</span>
+            <span class="dash-kpi-value dash-kpi-accent" id="dash-kpi-lucro">R$ 0,00</span>
+          </article>
+          <article class="dash-kpi card">
+            <span class="dash-kpi-label">Margem média (ponderada)</span>
+            <span class="dash-kpi-value" id="dash-kpi-margem">0%</span>
+          </article>
+          <article class="dash-kpi card">
+            <span class="dash-kpi-label">Volume de venda (soma)</span>
+            <span class="dash-kpi-value" id="dash-kpi-volume">R$ 0,00</span>
+          </article>
+          <article class="dash-kpi card">
+            <span class="dash-kpi-label">Com vínculo BlueFocus</span>
+            <span class="dash-kpi-value" id="dash-kpi-bf">0 / 0</span>
+            <span class="dash-kpi-hint">ID BF ou SKU só numérico</span>
+          </article>
+        </div>
+
+        <div class="dash-main-grid">
+          <section class="card dash-section dash-section--table">
+            <h2>Top 10 — maior lucro (SANHERO)</h2>
+            <p class="hint dash-section-hint">Mesma regra de cálculo da calculadora principal.</p>
+            <div class="table-wrapper dash-table-wrap">
+              <table class="dash-table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Produto</th>
+                    <th>Venda</th>
+                    <th>Lucro</th>
+                    <th>Margem</th>
+                  </tr>
+                </thead>
+                <tbody id="dash-top-body"></tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="card dash-section dash-section--bf">
+            <h2>Movimentação BlueFocus</h2>
+            <p class="hint dash-section-hint">Dados do mesmo JSON — sem token na tela.</p>
+            <div class="dash-bf-grid">
+              <div class="dash-bf-cell">
+                <span class="dash-bf-label">Linhas na lista monitorada</span>
+                <span class="dash-bf-num" id="dash-bf-monitor">0</span>
+              </div>
+              <div class="dash-bf-cell">
+                <span class="dash-bf-label">Linhas com ProdutoId + código barras</span>
+                <span class="dash-bf-num" id="dash-bf-linha">0</span>
+              </div>
+              <div class="dash-bf-cell">
+                <span class="dash-bf-label">Estoque inicial (hoje)</span>
+                <span class="dash-bf-num dash-bf-soft" id="dash-bf-baseline">—</span>
+              </div>
+              <div class="dash-bf-cell">
+                <span class="dash-bf-label">Conexão SOAP</span>
+                <span class="dash-bf-status" id="dash-bf-conexao">—</span>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <p class="dash-footer-meta" id="dash-meta"></p>
+      </main>
+    </div>
+
+    <script src="./db-api.js"></script>
+    <script src="./apresentacao.js"></script>
+  </body>
+</html>

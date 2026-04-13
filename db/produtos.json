@@ -1,0 +1,20 @@
+[
+  {
+    "id": "seed-minimop",
+    "nome": "MiniMop",
+    "sku": "TT-MINI-001",
+    "valorVenda": 14.9,
+    "comissaoPercent": 9,
+    "cupom": 1,
+    "custo": 0
+  },
+  {
+    "id": "seed-bivolt",
+    "nome": "Bivolt",
+    "sku": "TT-BV-002",
+    "valorVenda": 329.9,
+    "comissaoPercent": 8,
+    "cupom": 1,
+    "custo": 0
+  }
+]
