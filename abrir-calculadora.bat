@@ -1,6 +1,6 @@
 @echo off
 chcp 65001 >nul
-cd /d "%~dp0"
+cd /d "%~dp0."
 
 set PORT=8080
 set PY=python
@@ -10,6 +10,9 @@ if errorlevel 1 set PY=py
 echo ========================================
 echo   Touya - Calculadora TikTok
 echo ========================================
+echo.
+echo RECOMENDADO: use ESTE arquivo para tudo — calculadora, movimentacao,
+echo   transferencia de arquivos na rede. Um servidor Python na porta 8080.
 echo.
 echo [ Voce neste PC ]
 echo    http://localhost:%PORT%/
@@ -24,13 +27,13 @@ if defined LANIP (
 echo.
 echo Deixe esta janela aberta. Feche para parar o servidor.
 echo.
-echo Live Server ^(porta 5500 + proxy /api^): abra abrir-live-server.bat
+echo Dica opcional ^(Live Server / front-end^): LEIA-ME-BAT.txt
 echo ========================================
 echo.
 
 start "" "http://localhost:%PORT%/"
 
-%PY% servidor.py
+"%PY%" "%~dp0servidor.py"
 if errorlevel 1 (
     echo.
     echo Erro ao iniciar servidor.py. Instale Python 3 e tente de novo.

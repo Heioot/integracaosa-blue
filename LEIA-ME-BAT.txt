@@ -1,0 +1,39 @@
+================================================================================
+  Touya — como abrir o projeto
+================================================================================
+
+Use apenas:
+
+  abrir-calculadora.bat
+
+Ele sobe o servidor Python (servidor.py) na porta 8080, abre o navegador e
+serve tudo: calculadora TikTok, movimentacao BlueFocus, transferencia na rede,
+painel, etc.
+
+  - Neste PC:  http://localhost:8080/
+  - Na mesma Wi-Fi (outros aparelhos):  http://SEU-IPv4:8080/
+    (o proprio .bat tenta mostrar o IPv4; se nao aparecer, use ipconfig.)
+
+Deixe a janela do .bat aberta. Feche para parar o servidor.
+
+--------------------------------------------------------------------------------
+  Opcional — recarregar HTML ao salvar (quem edita front-end)
+--------------------------------------------------------------------------------
+
+Nao e obrigatorio. Se quiser Live Server com proxy para /api, com Node.js
+instalado, numa pasta do projeto (servidor.py ja rodando na 8080):
+
+  npx --yes live-server@1.2.2 --port=5500 --host=0.0.0.0 --proxy=/api:http://127.0.0.1:8080
+
+Abra pelo endereco que o live-server mostrar; nao use a porta 8080 para o
+Live Server (deixe 8080 so para o Python).
+
+--------------------------------------------------------------------------------
+  Transferencia de arquivos na rede
+--------------------------------------------------------------------------------
+
+  http://localhost:8080/transferencia/
+
+(com abrir-calculadora.bat rodando)
+
+================================================================================

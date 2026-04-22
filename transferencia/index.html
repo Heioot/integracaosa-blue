@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Touya | Transferência na rede</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Manrope:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body class="page-transferencia">
+    <header class="topbar">
+      <div class="topbar-start">
+        <button
+          type="button"
+          class="nav-mobile-toggle icon-btn"
+          id="nav-mobile-toggle"
+          aria-label="Abrir menu"
+          aria-expanded="false"
+          aria-controls="app-sidebar"
+        >
+          ☰
+        </button>
+        <div class="brand">Touya</div>
+      </div>
+      <nav class="top-nav">
+        <a href="../index.html">Dashboard</a>
+        <div class="nav-dropdown" id="nav-dropdown-calculadora">
+          <span class="nav-dropdown-label">Calculadora</span>
+          <ul class="nav-dropdown-menu" role="menu">
+            <li role="none"><a href="../index.html" role="menuitem">TikTok</a></li>
+            <li role="none"><a href="#" role="menuitem">Shopee</a></li>
+          </ul>
+        </div>
+        <a href="../movimentacao/">Movimentação</a>
+        <a href="../fechamento/">Fechamento</a>
+        <a href="./" class="active">Arquivos na rede</a>
+        <a href="../apresentacao.html">Painel</a>
+      </nav>
+      <div class="top-actions">
+        <span class="dot"></span>
+      </div>
+    </header>
+
+    <div class="app-shell">
+      <aside class="sidebar" id="app-sidebar">
+        <nav class="side-nav">
+          <a href="../index.html"><span>Home</span></a>
+          <a href="../index.html"><span>Calculadora TikTok</span></a>
+          <a href="#"><span>Analytics</span></a>
+          <a href="#"><span>Inventory</span></a>
+          <a href="../movimentacao/"><span>Movimentação</span></a>
+          <a href="../fechamento/"><span>Fechamento</span></a>
+          <a href="./" class="active"><span>Arquivos na rede</span></a>
+          <a href="../apresentacao.html"><span>Painel ao vivo</span></a>
+        </nav>
+      </aside>
+      <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+      <div class="sidebar-controls">
+        <button id="toggle-sidebar" class="icon-btn" type="button" title="Recuar menu">◀</button>
+      </div>
+
+      <main class="container">
+        <section class="hero">
+          <h1>Transferência <span>na rede</span></h1>
+          <p>
+            No disco, tudo fica na pasta <code>rede_transferencia</code> (ao lado de <code>servidor.py</code>).
+            Use <code>http://&lt;IP&gt;:8080/transferencia/</code> com <strong>abrir-calculadora.bat</strong>.
+            Ao criar pasta, o aviso verde mostra o <strong>caminho completo</strong> no Windows — confira no Explorer.
+          </p>
+        </section>
+
+        <section class="card">
+          <h2>Enviar arquivos</h2>
+          <p class="hint" id="rede-dropzone-hint">
+            Arraste e solte aqui ou clique. Os arquivos vão para a pasta atual.
+          </p>
+          <div id="rede-dropzone" class="rede-dropzone" role="button" tabindex="0" aria-label="Área para soltar arquivos">
+            <span class="rede-dropzone-title">Solte os arquivos aqui</span>
+            <span class="rede-dropzone-sub">ou clique para selecionar</span>
+          </div>
+          <input type="file" id="rede-file-input" hidden multiple />
+          <p id="rede-status" class="config-feedback" role="status" aria-live="polite"></p>
+          <p id="rede-erro" class="erro-api" role="alert"></p>
+        </section>
+
+        <section class="card">
+          <div class="rede-toolbar">
+            <h2 style="margin: 0">Conteúdo</h2>
+            <div class="rede-toolbar-actions">
+              <button type="button" id="rede-btn-up" class="btn-muted" title="Pasta acima" disabled>
+                ↑ Subir
+              </button>
+              <button type="button" id="rede-btn-mkdir" class="btn-muted">Nova pasta</button>
+            </div>
+          </div>
+          <nav class="rede-breadcrumb" id="rede-bc" aria-label="Caminho da pasta"></nav>
+          <div id="rede-cards" class="rede-cards" role="list"></div>
+        </section>
+      </main>
+    </div>
+
+    <script src="./rede-arquivos.js"></script>
+  </body>
+</html>

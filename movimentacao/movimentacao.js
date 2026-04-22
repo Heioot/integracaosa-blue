@@ -666,7 +666,23 @@ let configSalvaMsgTimer = null;
 
 const appShell = document.querySelector(".app-shell");
 const toggleSidebarBtn = document.getElementById("toggle-sidebar");
+const navMobileToggle = document.getElementById("nav-mobile-toggle");
 const sidebarBackdrop = document.getElementById("sidebar-backdrop");
+
+/* Mesmo breakpoint do CSS: gaveta + hamburger (≤980px) */
+const mqMobileNav = window.matchMedia("(max-width: 980px)");
+
+/** Atualiza aria-expanded / aria-label do botão hamburger conforme o painel lateral. */
+function refreshMobileSidebarAria() {
+  if (!navMobileToggle || !appShell) return;
+  if (!mqMobileNav.matches) {
+    navMobileToggle.setAttribute("aria-expanded", "false");
+    return;
+  }
+  const open = appShell.classList.contains("mobile-sidebar-open");
+  navMobileToggle.setAttribute("aria-expanded", open ? "true" : "false");
+  navMobileToggle.setAttribute("aria-label", open ? "Fechar menu" : "Abrir menu");
+}
 
 let ultimaLeitura = [];
 /** Paralelo a `ultimaLeitura`: mesma ordem dos `ProdutoItem` enviados na última consulta. */
@@ -1496,27 +1512,43 @@ async function initCampos() {
 
 if (toggleSidebarBtn && appShell) {
   toggleSidebarBtn.addEventListener("click", () => {
-    const isMobile = window.matchMedia("(max-width: 980px)").matches;
-    if (isMobile) {
+    if (mqMobileNav.matches) {
       appShell.classList.toggle("mobile-sidebar-open");
+      refreshMobileSidebarAria();
     } else {
       appShell.classList.toggle("sidebar-collapsed");
     }
   });
 }
 
+if (navMobileToggle && appShell) {
+  navMobileToggle.addEventListener("click", () => {
+    appShell.classList.toggle("mobile-sidebar-open");
+    refreshMobileSidebarAria();
+  });
+}
+
 if (sidebarBackdrop && appShell) {
   sidebarBackdrop.addEventListener("click", () => {
     appShell.classList.remove("mobile-sidebar-open");
+    refreshMobileSidebarAria();
   });
 }
 
 document.querySelectorAll(".side-nav a").forEach((link) => {
   link.addEventListener("click", () => {
-    if (window.matchMedia("(max-width: 980px)").matches) {
+    if (mqMobileNav.matches) {
       appShell.classList.remove("mobile-sidebar-open");
+      refreshMobileSidebarAria();
     }
   });
+});
+
+window.addEventListener("resize", () => {
+  if (!mqMobileNav.matches && appShell) {
+    appShell.classList.remove("mobile-sidebar-open");
+    refreshMobileSidebarAria();
+  }
 });
 
 document.querySelectorAll("#nav-dropdown-calculadora .nav-dropdown-menu a").forEach((link) => {

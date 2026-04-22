@@ -2,7 +2,7 @@
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>Touya | Calculadora TikTok</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -14,7 +14,19 @@
   </head>
   <body class="page-calculadora">
     <header class="topbar">
-      <div class="brand">Touya</div>
+      <div class="topbar-start">
+        <button
+          type="button"
+          class="nav-mobile-toggle icon-btn"
+          id="nav-mobile-toggle"
+          aria-label="Abrir menu"
+          aria-expanded="false"
+          aria-controls="app-sidebar"
+        >
+          ☰
+        </button>
+        <div class="brand">Touya</div>
+      </div>
       <nav class="top-nav">
         <a href="#">Dashboard</a>
         <div class="nav-dropdown" id="nav-dropdown-calculadora">
@@ -24,8 +36,9 @@
             <li role="none"><a href="#" role="menuitem">Shopee</a></li>
           </ul>
         </div>
-        <a href="#">History</a>
         <a href="./movimentacao/">Movimentação</a>
+        <a href="./fechamento/">Fechamento</a>
+        <a href="./transferencia/">Arquivos na rede</a>
         <a href="./apresentacao.html">Painel</a>
       </nav>
       <div class="top-actions">
@@ -34,13 +47,15 @@
     </header>
 
     <div class="app-shell">
-      <aside class="sidebar">
+      <aside class="sidebar" id="app-sidebar">
         <nav class="side-nav">
           <a href="#"><span>Home</span></a>
           <a href="#" class="active"><span>Calculadora TikTok</span></a>
           <a href="#"><span>Analytics</span></a>
           <a href="#"><span>Inventory</span></a>
           <a href="./movimentacao/"><span>Movimentação</span></a>
+          <a href="./fechamento/"><span>Fechamento</span></a>
+          <a href="./transferencia/"><span>Arquivos na rede</span></a>
           <a href="./apresentacao.html"><span>Painel ao vivo</span></a>
         </nav>
       </aside>

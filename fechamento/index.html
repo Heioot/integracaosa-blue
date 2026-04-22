@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Touya | Fechamento (income TikTok)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Manrope:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body class="page-movimentacao page-fechamento">
+    <header class="topbar">
+      <div class="topbar-start">
+        <button
+          type="button"
+          class="nav-mobile-toggle icon-btn"
+          id="nav-mobile-toggle"
+          aria-label="Abrir menu"
+          aria-expanded="false"
+          aria-controls="app-sidebar"
+        >
+          ☰
+        </button>
+        <div class="brand">Touya</div>
+      </div>
+      <nav class="top-nav">
+        <a href="../index.html">Dashboard</a>
+        <div class="nav-dropdown" id="nav-dropdown-calculadora">
+          <span class="nav-dropdown-label">Calculadora</span>
+          <ul class="nav-dropdown-menu" role="menu">
+            <li role="none"><a href="../index.html" role="menuitem">TikTok</a></li>
+            <li role="none"><a href="#" role="menuitem">Shopee</a></li>
+          </ul>
+        </div>
+        <a href="../movimentacao/">Movimentação</a>
+        <a href="./" class="active">Fechamento</a>
+        <a href="../transferencia/">Arquivos na rede</a>
+        <a href="../apresentacao.html">Painel</a>
+      </nav>
+      <div class="top-actions">
+        <span class="dot"></span>
+      </div>
+    </header>
+
+    <div class="app-shell">
+      <aside class="sidebar" id="app-sidebar">
+        <nav class="side-nav">
+          <a href="../index.html"><span>Home</span></a>
+          <a href="../index.html"><span>Calculadora TikTok</span></a>
+          <a href="#"><span>Analytics</span></a>
+          <a href="#"><span>Inventory</span></a>
+          <a href="../movimentacao/"><span>Movimentação</span></a>
+          <a href="./" class="active"><span>Fechamento</span></a>
+          <a href="../transferencia/"><span>Arquivos na rede</span></a>
+          <a href="../apresentacao.html"><span>Painel ao vivo</span></a>
+        </nav>
+      </aside>
+      <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+      <div class="sidebar-controls">
+        <button id="toggle-sidebar" class="icon-btn" type="button" title="Recuar menu">◀</button>
+      </div>
+
+      <main class="container">
+        <section class="hero">
+          <h1>Fechamento <span>TikTok Shop</span></h1>
+          <p>
+            Importe a planilha de <strong>rendimentos</strong> (export «income»). O fechamento usa só linhas cuja
+            <strong>Data de criação do pedido</strong> cai no mês escolhido. Por produto, calculamos a média
+            <strong>sem outliers</strong> (IQR / Tukey) de «Valor total a ser liquidado» e de «Vendas líquidas dos
+            produtos», de forma independente.
+          </p>
+        </section>
+
+        <section class="card">
+          <div class="header-row">
+            <h2>Planilha e período</h2>
+            <div class="header-actions">
+              <button type="button" id="fech-recalcular" class="btn-muted">Recalcular</button>
+            </div>
+          </div>
+
+          <div class="filters-grid">
+            <label>
+              Arquivo (.xlsx)
+              <input id="fech-arquivo" type="file" accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
+            </label>
+            <label>
+              Mês do fechamento
+              <select id="fech-mes" aria-label="Mês do fechamento">
+                <option value="1">Janeiro</option>
+                <option value="2">Fevereiro</option>
+                <option value="3" selected>Março</option>
+                <option value="4">Abril</option>
+                <option value="5">Maio</option>
+                <option value="6">Junho</option>
+                <option value="7">Julho</option>
+                <option value="8">Agosto</option>
+                <option value="9">Setembro</option>
+                <option value="10">Outubro</option>
+                <option value="11">Novembro</option>
+                <option value="12">Dezembro</option>
+              </select>
+            </label>
+            <label>
+              Ano
+              <input id="fech-ano" type="number" min="2020" max="2040" step="1" value="2026" />
+            </label>
+            <label>
+              Pesquisar produto
+              <input id="fech-busca" type="search" placeholder="Parte do nome…" autocomplete="off" />
+            </label>
+          </div>
+
+          <p id="fech-status" class="hint" style="margin-top: 8px">Carregue um arquivo .xlsx (export income TikTok).</p>
+          <p id="fech-resumo" class="hint muted-cell" style="margin-top: 4px"></p>
+        </section>
+
+        <section class="card">
+          <div class="header-row fech-result-header">
+            <div>
+              <h2>Médias por produto (mês selecionado)</h2>
+              <p class="fech-result-sub">
+                Cards ordenados do <strong>maior</strong> para o <strong>menor</strong> número de pedidos no mês.
+              </p>
+            </div>
+          </div>
+          <div id="fech-cards" class="fech-cards" role="list" aria-label="Produtos no período"></div>
+        </section>
+      </main>
+    </div>
+
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+    <script src="./fechamento.js"></script>
+  </body>
+</html>
